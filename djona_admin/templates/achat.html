@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br/><br/><br/>
+    <div class="container my-4">
+        <div class="container">
+            {% include "slide.html" with images=images %}
+            {% include 'layout/product_card.html' %}
+        </div>
+    </div>
+
+{% endblock %}

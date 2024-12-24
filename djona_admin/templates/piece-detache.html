@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <br/><br/><br/><br/><br/>
+    <br/><br/>
+
+    <div class="container py-4">
+
+        {% if message %}
+            <div class="alert alert-warning text-center" role="alert">
+                {{ message }}
+            </div>
+        {% else %}
+            {% if piece %}
+                <div class="col-md-3 mb-4 py-5">
+                    <a href="{% url 'piece-detache' %}" class="text-decoration-none">
+                        <div class="card h-100 shadow-sm position-relative">
+                            {% if piece.reduction %}
+                                <div class="badge bg-danger position-absolute top-0 end-0 m-2" style="z-index: 10;">
+                                    -{{ piece.reduction }}%
+                                </div>
+                            {% endif %}
+                
+                            {% if piece.image_url %}
+                                <img src="{{ piece.image_url }}" class="card-img-top" alt="{{ piece.nom }}" style="height: 200px; object-fit: cover;">
+                            {% else %}
+                                <img src="" class="card-img-top" alt="Image non disponible" style="height: 200px; object-fit: cover;">
+                            {% endif %}
+                
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-dark fw-bold">{{ piece.nom }}</h5>
+                                {% if piece.reduction %}
+                                    {% if piece.prix_original %}
+                                        <p class="text-muted text-decoration-line-through m-0">{{ piece.prix_original }} €</p>
+                                    {% endif %}
+                                    <p class="text-danger fw-bold">{{ piece.prix_reduit }} FCFA</p>
+                                {% else %}
+                                    <p class="fw-bold" style="color: #000;">{{ piece.prix }} FCFA</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% else %}
+                <div class="alert alert-info text-center" role="alert">
+                    Aucun élément trouvé pour l'instant.
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+{% endblock %}

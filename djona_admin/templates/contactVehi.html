@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container my-5">
+
+        <section class="hero-section text-center bg-light" style="padding: 150px;">
+            <div class="container">
+                <h2 class="fw-bold" style="text-transform: uppercase;">Contact pour <br/><span class="text-primary">{{ product.marque }} {{ product.modele }}</span></h2>
+            <p class="text-muted">Veuillez remplir le formulaire ci-dessous pour plus d'informations.</p>
+            </div>
+        </section><br/><br/>
+
+        <!-- Messages de succès/erreur -->
+        {% if messages %}
+            <div class="container mt-4">
+                {% if messages %}
+                    <div class="alert alert-info">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+
+        <!-- Formulaire -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10 col-sm-12">
+                <form method="post" class="shadow-lg p-4 rounded border">
+                    {% csrf_token %}
+
+                    <!-- Informations sur le véhicule -->
+                    <div class="mb-4 text-center">
+                        {% if product.first_image_url %}
+                            <img src="{{ product.first_image_url }}" alt="{{ product.nom }}" class="img-fluid w-100 rounded">
+                        {% else %}
+                            <p class="text-muted">Pas d'image disponible</p>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+                        <label for="marque" class="form-label fw-semibold">Marque</label>
+                        <input type="text" id="marque" class="form-control" value="{{ product.marque }}" readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label for="modele" class="form-label fw-semibold">Modèle</label>
+                        <input type="text" id="modele" class="form-control" value="{{ product.modele }}" readonly>
+                    </div>
+
+                    <!-- Informations client -->
+                    <div class="mb-4">
+                        <label for="nom" class="form-label fw-semibold">Nom</label>
+                        <input type="text" id="nom" name="nom" class="form-control" placeholder="Entrez votre nom" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="prenom" class="form-label fw-semibold">Prénom</label>
+                        <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Entrez votre prénom" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="numero" class="form-label fw-semibold">Numéro de téléphone</label>
+                        <input type="text" id="numero" name="numero" class="form-control" placeholder="Entrez votre numéro" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="ville" class="form-label fw-semibold">Ville</label>
+                        <input type="text" id="ville" name="ville" class="form-control" placeholder="Entrez votre ville" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="form-label fw-semibold">E-mail</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Entrez votre e-mail" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="form-label fw-semibold">Nombre de véhicules</label>
+                        <input type="number" id="description" name="description" class="form-control" placeholder="Entrez le nombre de véhicules" required>
+                    </div>
+
+                    <!-- Bouton d'envoi -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary w-100 py-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-envelope me-2"></i> Envoyer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

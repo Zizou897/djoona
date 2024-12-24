@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container my-5">
+        <!-- <section class="hero-section text-center bg-light" style="padding: 150px;">
+            <div class="container">
+                <h1 class="display-4 fw-bold">Nous réjoindre</h1>
+                <p class="lead mt-3">Votre partenaire de confiance pour l'achat, la location et l'entretien de voitures.</p>
+            </div>
+        </section> -->
+
+        <br/><br/><br/><br/>
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center mb-4 mb-md-0">
+                <div class="p-4">
+                    <i class="bi bi-people-fill" style="font-size: 5rem; color: #154698;"></i>
+                    <h3 class="mt-3">Rejoignez-nous dès aujourd'hui</h3>
+                    <p class="text-muted">Devenez membre de notre communauté et profitez de nombreux avantages.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="p-4 border rounded">
+                    <h4 class="mb-4">Formulaire d'inscription</h4>
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="nom" placeholder="Votre nom" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="email" placeholder="Votre e-mail" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="tel" class="form-control" id="telephone" placeholder="Votre numéro de téléphone" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="message" rows="3" placeholder="Pourquoi souhaitez-vous nous rejoindre ?"></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary py-2">Envoyer ma candidature</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

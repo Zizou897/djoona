@@ -1,0 +1,69 @@
+<div class="container rechercheMarque">
+    <form method="get" action="{% url 'recherche' %}">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-3 mb-3">
+                <select class="form-select" id="marque" name="marque">
+                    <option value="" disabled selected>Marque</option>
+                    {% for marque in unique_marques %}
+                        <option value="{{ marque }}">{{ marque }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3 mb-3">
+                <select class="form-select" id="carrosserie" name="carrosserie">
+                    <option value="" disabled selected>Carrosserie</option>
+                    {% for type in unique_type %}
+                        <option value="{{ type }}">{{ type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3 mb-3">
+                <select class="form-select" id="boite" name="boite">
+                    <option value="" disabled selected>Boîte de vitesse</option>
+                    {% for boite in unique_transmission %}
+                        <option value="{{ boite }}">{{ boite }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3 mb-3">
+                <select class="form-select" id="carburant" name="carburant">
+                    <option value="" disabled selected>Carburant</option>
+                    {% for carburant in unique_carburants %}
+                        <option value="{{ carburant }}">{{ carburant }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 text-center">
+                <button class="btn btn-outline-secondary w-100 w-md-auto" type="submit" style="background: #154698; color: #fff;">
+                    
+                    Recherche
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<!-- Modal d'erreur -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">
+                    <span class="text-danger"><i class="bi bi-exclamation-circle-fill"></i> Erreur de formulaire</span>
+                </h5>
+            </div>
+            <div class="modal-body text-center">
+                <p class="mt-3">Veuillez remplir tous les champs avant de soumettre le formulaire.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="closeErrorModal" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

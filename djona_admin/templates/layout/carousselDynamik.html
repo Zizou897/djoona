@@ -1,0 +1,39 @@
+<div id="dynamicCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicateurs -->
+    <div class="carousel-indicators">
+      {% for Product in list_products %}
+        <button type="button" data-bs-target="#dynamicCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
+                class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+      {% endfor %}
+    </div>
+  
+    <!-- Slides -->
+    <div class="carousel-inner">
+      {% for Product in list_products %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <div class="d-flex flex-column align-items-center text-center">
+            <!-- Image du produit -->
+            <img src="{{ Product.image_url|default:'default.jpg' }}" 
+                 class="d-block img-fluid" alt="{{ Product.nom }}" style="max-height: 400px; object-fit: cover;">
+  
+            <!-- Détails du produit -->
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3 mt-3">
+              <h5>{{ Product.marque }}</h5>
+              <p>{{ Product.nom }} - {{ Product.prix }} €</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  
+    <!-- Contrôles -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#dynamicCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Précédent</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#dynamicCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Suivant</span>
+    </button>
+  </div>
+  

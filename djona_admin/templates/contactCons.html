@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Titre de la page -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">Contactez-nous pour exposer vos véhicules sur Djona</h2>
+        <p class="text-muted">Veuillez remplir le formulaire ci-dessous pour plus d'informations.</p>
+    </div>
+    
+    <!-- Formulaire -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <form method="POST" action="" class="shadow-lg p-4 rounded border">
+                {% csrf_token %}
+
+                <!-- Informations client -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="civilite" class="form-label fw-semibold">Civilité</label>
+                        <select id="civilite" name="civilite" class="form-control" required>
+                            <option value="" disabled selected>Choisissez une civilité</option>
+                            <option value="monsieur">Monsieur</option>
+                            <option value="madame">Madame</option>
+                            <option value="mademoiselle">Mademoiselle</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nom" class="form-label fw-semibold">Nom</label>
+                        <input type="text" id="nom" name="nom" class="form-control" placeholder="Entrez votre nom" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="prenom" class="form-label fw-semibold">Prénom</label>
+                        <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Entrez votre prénom" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="numero" class="form-label fw-semibold">Numéro de téléphone</label>
+                        <input type="text" id="numero" name="numero" class="form-control" placeholder="Entrez votre numéro" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="ville" class="form-label fw-semibold">Ville</label>
+                        <input type="text" id="ville" name="ville" class="form-control" placeholder="Entrez votre ville" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label fw-semibold">E-mail</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Entrez votre e-mail" required>
+                    </div>
+                </div>
+
+                <!-- Informations supplémentaires -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="nom_entreprise" class="form-label fw-semibold">Nom de l'entreprise</label>
+                        <input type="text" id="nom_entreprise" name="nom_entreprise" class="form-control" placeholder="Entrez le nom de votre entreprise" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nombre_vehicule" class="form-label fw-semibold">Nombre de véhicules en vente</label>
+                        <input type="number" id="nombre_vehicule" name="nombre_vehicule" class="form-control" placeholder="Entrez le nombre de véhicules" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <label for="localisation" class="form-label fw-semibold">Localisation</label>
+                        <input type="text" id="localisation" name="localisation" class="form-control" placeholder="Entrez la localisation" required>
+                    </div>
+                </div>
+
+                <!-- Bouton de soumission -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100 py-3 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-envelope me-2"></i> Soumettre le formulaire
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

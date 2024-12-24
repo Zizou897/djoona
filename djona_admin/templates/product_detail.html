@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container py-5">
+        <div class="row g-5 d-flex align-items-start" style="padding-top:100px;">
+            <div class="col-md-8">
+                <img id="mainImage" src="{{ images.first.image.url }}" class="d-block w-100" alt="{{ product.nom }}" style="object-fit: cover; height: 500px;">
+
+                <div class="mt-3 d-flex justify-content-center">
+                    {% for image in images %}
+                        <div class="mx-2">
+                            <img src="{{ image.image.url }}" class="img-fluid rounded" alt="{{ product.nom }}" style="object-fit: cover; height: 80px; cursor: pointer;" onclick="changeMainImage('{{ image.image.url }}')">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-4 bg-white rounded" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                    <h2 class="fw-bold mb-4" style="text-transform: uppercase;">Détail du produit</h2>
+                    
+                    <p class="text-muted mb-2">
+                        Marque : <strong style="text-transform: uppercase;">{{ product.marque }}</strong>
+                    </p>
+                    <hr class="my-2">
+                    
+                    <p class="text-muted mb-2">
+                        Modèle : <strong>{{ product.modele }}</strong>
+                    </p>
+                    <hr class="my-2">
+                    
+                    <p class="text-muted mb-2">
+                        Carburant : <strong>{{ product.carburant }}</strong>
+                    </p>
+                    <hr class="my-2">
+                    
+                    <p class="text-muted mb-2">
+                        Carrosserie : <strong>{{ product.type }}</strong>
+                    </p>
+                    <hr class="my-2">
+                    
+                    <p class="text-muted mb-2">
+                        Kilométrage : <strong>{{ product.kilometrage }} km</strong>
+                    </p>
+                    <hr class="my-2">
+                    
+                    <p class="text-muted mb-2">
+                        Transmission : <strong>{{ product.transmission }}</strong>
+                    </p>
+                    <hr class="my-2">
+                    
+                    <h3 class="fw-bold text-primary mb-0">{{ product.prix }} FCFA</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="h4 fw-bold">Description de {{ product.marque }}</h2>
+                <p class="text-muted">{{ product.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-12 col-md-4 col-lg-4">
+                <a href="{% url 'contact' product.id %}" class="btn btn-outline-primary w-100 py-3 d-flex align-items-center justify-content-center">
+                    <i class="bi bi-envelope me-2"></i> Contacter par E-mail
+                </a>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <a href="https://wa.me/22540018376?text={{ whatsapp_message|urlencode }}" 
+                    target="_blank" 
+                    class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center">
+                    <i class="bi bi-whatsapp me-2"></i> Contacter par WhatsApp
+                </a>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <button class="btn btn-outline-secondary w-100 w-md-auto 
+                {% if product.statut|lower != 'location' %}disabled{% endif %}" 
+                type="button" style="background: #154698; color: #fff; padding: 15px;" data-bs-toggle="modal" data-bs-target="#contactModal">
+                    <i class="bi bi-calendar-check me-2"></i> Faites votre réservation
+                </button>
+            </div>            
+
+        </div>
+    </div>
+
+
+    <!-- Modal d'erreur -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header flex-column text-center" style="padding: 20px;">
+                    <button type="button" class="btn-fermer" data-bs-dismiss="modal" aria-label="Close">X</button><br/>
+    
+                    <h3 class="fw-bold">Passez votre réservation</h3>
+                    <p class="text-muted">Roulez en toutes sécurité <span style="color: red;font-weight:500;"> Tous champs sont obligatoires *</span></p>
+                </div>
+                
+    
+                <div class="modal-body text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-md-10 col-sm-12">
+                            <form method="POST" action="" class="p-4 rounded border">
+                                {% csrf_token %}
+    
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <select id="civilite" name="civilite" class="form-control" required>
+                                            <option value="" disabled selected>Choisissez une civilité</option>
+                                            <option value="monsieur">Monsieur</option>
+                                            <option value="madame">Madame</option>
+                                            <option value="mademoiselle">Mademoiselle</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" id="nom" name="nom" class="form-control" placeholder="Entrez votre nom" required>
+                                    </div>
+                                </div>
+    
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Entrez votre prénom" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" id="numero" name="numero" class="form-control" placeholder="Entrez votre numéro" required>
+                                    </div>
+                                </div>
+    
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <input type="text" id="ville" name="ville" class="form-control" placeholder="Entrez votre ville" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" id="email" name="email" class="form-control" placeholder="Entrez votre e-mail" required>
+                                    </div>
+                                </div>
+    
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <input type="text" id="nom_entreprise" name="nom_entreprise" class="form-control" placeholder="Entrez le nom de votre entreprise" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" id="nombre_vehicule" name="nombre_vehicule" class="form-control" placeholder="Entrez le nombre de véhicules" required>
+                                    </div>
+                                </div>
+    
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <input type="text" id="localisation" name="localisation" class="form-control" placeholder="Entrez la localisation" required>
+                                    </div>
+                                </div>
+    
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary w-100 py-3 d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-envelope me-2"></i> Soumettre le formulaire
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function changeMainImage(imageUrl) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = imageUrl;
+        }
+    </script>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Contactez-nous pour ce véhicule</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="marque">Marque</label>
+            <input type="text" id="marque" class="form-control" value="{{ produit.marque }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="modele">Modèle</label>
+            <input type="text" id="modele" class="form-control" value="{{ produit.modele }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <input type="text" id="type" class="form-control" value="{{ produit.type }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" class="form-control" placeholder="Entrez votre nom" required>
+        </div>
+        <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Entrez votre prénom" required>
+        </div>
+        <div class="form-group">
+            <label for="numero">Numéro de téléphone</label>
+            <input type="text" id="numero" name="numero" class="form-control" placeholder="Entrez votre numéro" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
+</div>
+
+{% endblock %}
+
+
+

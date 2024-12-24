@@ -1,0 +1,211 @@
+{% load custom_filters %}
+
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Djona - Plateforme Innovante{% endblock %}</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+        {% load static %}
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+        
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+            {% include 'header/nav.html' %}
+        </div>
+
+        {% block content %}{% endblock %}            
+
+        {% include 'header/footer.html' %}
+
+
+        <script src="{% static 'js/script.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+        <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js'></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <script>            
+
+            $(document).ready(function() {
+                $(".owl-carousel").owlCarousel({
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    margin: 10,
+                    loop: true,
+                    responsive: {
+                        0: {
+                            items: 2
+                        },
+                        600: {
+                            items: 4
+                        },
+                        1000: {
+                            items: 8
+                        }
+                    }
+                });
+            });
+
+            $(document).ready(function(){
+                $('.slick-slider').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 3000,
+                    arrows: true,
+                    dots: true,
+                    infinite: true,
+                });
+            });
+
+            $(document).ready(function(){
+                $('.slider-for').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,
+                    fade: true,
+                    asNavFor: '.slider-nav' 
+                });
+        
+                $('.slider-nav').slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    asNavFor: '.slider-for',
+                    dots: true,
+                    centerMode: true,
+                    focusOnSelect: true
+                });
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("form"); 
+                const submitButton = form.querySelector('button[type="submit"]');
+                const modalElement = document.getElementById('errorModal'); 
+                const modal = new bootstrap.Modal(modalElement, {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                const closeModalButton = document.getElementById('closeErrorModal'); 
+                
+                form.addEventListener("submit", function(event) {
+                    const marque = document.getElementById('marque').value;
+                    const carrosserie = document.getElementById('carrosserie').value;
+                    const boite = document.getElementById('boite').value;
+                    const carburant = document.getElementById('carburant').value;
+            
+                    if (!marque || !carrosserie || !boite || !carburant) {
+                        event.preventDefault();
+                        modal.show();
+                    }
+                });
+            
+                closeModalButton.addEventListener('click', function() {
+                    modal.hide();
+                });
+            });
+            
+            document.addEventListener("DOMContentLoaded", function () {
+                const modalElement = document.getElementById('contactModal');
+                const closeButton = modalElement.querySelector('.btn-close');            
+                const modal = new bootstrap.Modal(modalElement, {
+                    backdrop: 'static', 
+                    keyboard: false
+                });            
+                closeButton.addEventListener('click', function () {
+                    modal.hide();
+                });
+                modalElement.addEventListener('hide.bs.modal', function (event) {
+                    if (!event.relatedTarget || event.relatedTarget !== closeButton) {
+                        event.preventDefault();
+                    }
+                });
+            });
+            
+            function toggleForms() {
+                const statut = document.getElementById("statut").value;
+                const formConcessionnaire = document.getElementById("formConcessionnaire");
+                const formParticulier = document.getElementById("formParticulier");
+        
+                formConcessionnaire.style.display = "none";
+                formParticulier.style.display = "none";
+        
+                if (statut === "concessionnaire") {
+                    formConcessionnaire.style.display = "block";
+                } else if (statut === "particulier") {
+                    formParticulier.style.display = "block";
+                }
+            }
+
+        </script>
+               
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
