@@ -12,7 +12,7 @@
             <!-- Cartes de produits -->
             {% for Product in list_products|slice:":12" %}
                 {% if Product.statut|lower == 'location'  %}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-9 px-2 veh_next">
+                    <div class="col-lg-3 col-sm-6 col-9 px-2 veh_next">
                         <div class="vehicle-card rounded h-100" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
                             <!-- Image du véhicule -->
                             <div class="vehicle-img rounded-top overflow-hidden" style="height: 200px;">

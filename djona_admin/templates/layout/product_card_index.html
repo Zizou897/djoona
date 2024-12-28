@@ -11,9 +11,8 @@
             <!-- Cartes de produits -->
             {% for Product in list_products|slice:":8" %}
                 {% if Product.statut|lower == 'vente' %}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-9 px-2 vehicle-card-Mom">
+                    <div class="col-lg-3 col-sm-6 col-9 px-2 vehicle-card-Mom">
                         <div class="vehicle-card rounded h-100" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-                            <!-- Image du véhicule -->
                             <div class="vehicle-img rounded-top overflow-hidden" style="height: 200px;">
                                 {% if first_image_urls|length > forloop.counter0 %}
                                     <img src="{{ first_image_urls|first }}" alt="{{ product.nom }}" class="img-fluid w-100 h-100 object-fit-cover">
@@ -22,7 +21,6 @@
                                 {% endif %}
                             </div>
 
-                            <!-- Détails du véhicule -->
                             <div class="vehicle-details p-3 mt-3">
                                 <p class="mb-2 text-start fw-bold small">
                                     <span style="background-color:#FFEBCC; color:#FF7101; padding:3px 5px; border-radius:3px; margin-right:5px;">

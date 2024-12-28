@@ -12,8 +12,8 @@
                 <div class="row">
                     {% for Product in page_obj.object_list %}
                         {% if Product.statut|lower == 'location' %}
-                            <div class="veh_next {% if is_location_page or is_piece_detache_page %}col-md-3{% else %}col-md-4{% endif %} " style="padding:5px;margin-top:15px;">
-                                <div class="vehicle-card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                        <div class="veh_next col-12 col-sm-6 col-lg-4" style="padding:5px;margin-top:15px;">
+                            <div class="vehicle-card h-100" style=" box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
                                 
                                     <!-- Image du véhicule -->
                                     <div class="vehicle-img" style="width:100%;height:200px;overflow:hidden;">
