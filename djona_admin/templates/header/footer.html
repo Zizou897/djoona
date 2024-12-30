@@ -1,48 +1,52 @@
 <footer class="footer-section">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-3 footer-info">
-                <h4 style="color: blue;">À propos de nous</h4>
-                <p>
-                    Nous sommes dédiés à fournir les meilleurs services automobiles, 
-                    avec une expertise inégalée et des offres exceptionnelles. 
-                </p>
-                <p>Contactez-nous pour plus d'informations ou toute assistance.</p>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-3 footer-info">
-                <h4 style="color: blue;">À propos de nous</h4>
-                <p>
-                    Nous sommes dédiés à fournir les meilleurs services automobiles, 
-                    avec une expertise inégalée et des offres exceptionnelles. 
-                </p>
-                <p>Contactez-nous pour plus d'informations ou toute assistance.</p>
+            <div class="col-12 col-sm-6 col-md-3 footer-links">
+                <h4 style="color: #fff;text-decoration:underline;">Navigations</h4>
+                <ul style="list-style:none;">
+                    <li><a href="{% url 'achat' %}">Achat</a></li>
+                    <li><a href="{% url 'location' %}">Location</a></li>
+                    <li><a href="{% url 'piece-detache' %}">Piece detachee</a></li>
+                    <li><a href="">Actualités</a></li>
+                </ul>
             </div>
 
             <div class="col-12 col-sm-6 col-md-3 footer-links">
-                <h4 style="color: blue;">Liens rapides</h4>
-                <ul>
-                    <li><a href="#" style="color:black">Accueil</a></li>
-                    <li><a href="#" style="color:black">Nos services</a></li>
-                    <li><a href="#" style="color:black">Contactez-nous</a></li>
-                    <li><a href="#" style="color:black">FAQ</a></li>
+                <h4 style="color: #fff;text-decoration:underline;">Djona</h4>
+                <ul style="list-style:none;">
+                    <li><a href="{% url 'rejoindre' %}">A propos de nous</a></li>
+                    <li><a href="{% url 'about' %}">Nous rejoindre</a></li>
+                    <li><a href="">Contacts</a></li>
                 </ul>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-3">
-                <h4 style="color: blue;">Nos parténaires</h4>
-                <ul>
-                    <li><a href="#" style="color:black">Accueil</a></li>
-                    <li><a href="#" style="color:black">Nos services</a></li>
-                    <li><a href="#" style="color:black">Contactez-nous</a></li>
-                    <li><a href="#" style="color:black">FAQ</a></li>
+            <div class="col-12 col-sm-6 col-md-3 footer-links">
+                <h4 style="color: #fff;text-decoration:underline;">Nos partenaires</h4>
+                <ul style="list-style:none;">
+                    <li><a href="#">Mc Auto Services</a></li>
+                    <li><a href="#">Garage Kagnan</a></li>
                 </ul>
             </div>
+
+            <div class="col-12 col-sm-6 col-md-3 footer-links">
+                <h4 style="color: #fff;text-decoration:underline;">Contactez-nous !</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li>
+                        <i class="fas fa-phone" style="color: #fff;"></i>
+                        <span style="margin-left: 10px;color: #fff;">+225 01 40 01 83 76</span>
+                    </li>
+                    <li style="margin-top: 10px;">
+                        <i class="fas fa-envelope" style="color: #fff;"></i>
+                        <span style="margin-left: 10px;color: #fff;">contact@mcautoservice.com</span>
+                    </li>
+                </ul>
+            </div>
+            
 
             <!-- Section de copyright -->
-            <div class="row mt-4">
-                <div class="col text-center">
-                    <p>&copy; 2024 Réalisé par Djona. Tous droits réservés.</p>
+            <div class="row mt-4" style="border-top: thin solid #fff;">
+                <div class="col text-center" style="padding-top: 15px;">
+                    <p style="color: #fff;">&copy; 2024 Réalisé par Djona. Tous droits réservés.</p>
                 </div>
             </div>
         </div>
