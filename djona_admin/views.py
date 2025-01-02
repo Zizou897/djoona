@@ -95,7 +95,7 @@ def IndexPage(request):
     )
     selected_marques = [marque['marque'] for marque in unique_marques]
     unique_marques_recherche = [marque['marque'] for marque in unique_marques_recherche]
-    unique_type = [type['type'] for type in unique_type]
+    # unique_type = [type['type'] for type in unique_type]
     unique_transmission = [transmission['transmission'] for transmission in unique_transmission]
     unique_carburants = [carburant['carburant'] for carburant in unique_carburants]
     
@@ -124,6 +124,21 @@ def IndexPage(request):
         return product.image_count(), product.first_image_url()
     
     type_counts = Counter(product.type.lower() for product in vente_products if product.type)
+    
+    carrosserie_by_marque = defaultdict(set)
+    transmission_by_marque_and_carrosserie = defaultdict(lambda: defaultdict(set))
+    produits = Produit.objects.all()
+    
+    for produit in produits:
+        carrosserie_by_marque[produit.marque].add(produit.type)
+    for produit in produits:
+        transmission_by_marque_and_carrosserie[produit.marque][produit.type].add(produit.transmission)
+
+    carrosserie_by_marque = {marque: list(types) for marque, types in carrosserie_by_marque.items()}
+    transmission_by_marque_and_carrosserie = {
+        marque: {carrosserie: list(transmissions) for carrosserie, transmissions in carross_dict.items()}
+        for marque, carross_dict in transmission_by_marque_and_carrosserie.items()
+    }
 
     context = {
         "list_products": marque_filtered_products,
@@ -132,7 +147,7 @@ def IndexPage(request):
         "type_counts": list(type_counts.items()),
         "unique_marques": unique_marques,
         "unique_marques_recherche": unique_marques_recherche,
-        "unique_type": unique_type,
+        # "unique_type": unique_type,
         "unique_transmission": unique_transmission,
         "unique_carburants": unique_carburants,
         "first_image_urls": [get_image_count_and_first_url(product)[1] for product in filtered_products],
@@ -145,6 +160,10 @@ def IndexPage(request):
         "vente_marques": vente_marques,
         "location_marques": location_marques,
         "products_by_marque_list": products_by_marque_list,
+        "carrosserie_by_marque": carrosserie_by_marque,
+        "unique_marques": list(carrosserie_by_marque.keys()),
+        "transmission_by_marque_and_carrosserie": transmission_by_marque_and_carrosserie,
+        "unique_marques": list(transmission_by_marque_and_carrosserie.keys()),
     }
 
     return render(request, "index.html", context)

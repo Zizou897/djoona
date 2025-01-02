@@ -30,13 +30,6 @@ SECRET_KEY = 'django-insecure-^+8q1egh$eypf$y$8ex8!&4c0y^v=g$u5gx$qdmoylq5bwjp9k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'camaraaime997@gmail.com>'
-EMAIL_HOST_PASSWORD = '02297702'
-
-
 
 ALLOWED_HOSTS = []
 
@@ -143,3 +136,9 @@ MEDIA_ROOT = BASE_DIR /'media_cdn'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'camaraaime997@gmail.com>'
+EMAIL_HOST_PASSWORD = '02297702'

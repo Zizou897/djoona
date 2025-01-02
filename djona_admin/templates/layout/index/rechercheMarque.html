@@ -4,29 +4,24 @@
             <div class="col-12 col-md-6 col-lg-3 mb-3">
                 <select class="form-select" id="marque" name="marque">
                     <option value="" disabled selected>Marque</option>
-                    {% for marque in unique_marques_recherche %}
+                    {% for marque in unique_marques %}
                         <option value="{{ marque }}">{{ marque }}</option>
                     {% endfor %}
                 </select>
             </div>
-
+            
             <div class="col-12 col-md-6 col-lg-3 mb-3">
                 <select class="form-select" id="carrosserie" name="carrosserie">
                     <option value="" disabled selected>Carrosserie</option>
-                    {% for type in unique_type %}
-                        <option value="{{ type }}">{{ type }}</option>
-                    {% endfor %}
                 </select>
             </div>
-
+            
             <div class="col-12 col-md-6 col-lg-3 mb-3">
                 <select class="form-select" id="boite" name="boite">
                     <option value="" disabled selected>Boîte de vitesse</option>
-                    {% for boite in unique_transmission %}
-                        <option value="{{ boite }}">{{ boite }}</option>
-                    {% endfor %}
                 </select>
             </div>
+            
 
             <div class="col-12 col-md-6 col-lg-3 mb-3">
                 <select class="form-select" id="carburant" name="carburant">
@@ -69,3 +64,61 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const marqueSelect = document.getElementById('marque');
+        const carrosserieSelect = document.getElementById('carrosserie');
+        const boiteSelect = document.getElementById('boite');
+
+        const transmissionData = {{ transmission_by_marque_and_carrosserie|safe }};
+
+        function updateCarrosseries() {
+            const marque = marqueSelect.value;
+
+            if (marque) {
+                carrosserieSelect.innerHTML = '<option value="" disabled selected>Choisissez une carrosserie</option>';
+                const carrossseries = Object.keys(transmissionData[marque] || {});
+                carrossseries.forEach(carrosserie => {
+                    const option = document.createElement('option');
+                    option.value = carrosserie;
+                    option.textContent = carrosserie;
+                    carrosserieSelect.appendChild(option);
+                });
+            } else {
+                carrosserieSelect.innerHTML = '<option value="" disabled selected>Choisissez une carrosserie</option>';
+            }
+
+*            boiteSelect.innerHTML = '<option value="" disabled selected>Choisissez une boîte de vitesse</option>';
+        }
+
+*        function updateTransmissions() {
+            const marque = marqueSelect.value;
+            const carrosserie = carrosserieSelect.value;
+
+            if (marque && carrosserie) {
+                boiteSelect.innerHTML = '<option value="" disabled selected>Choisissez une boîte de vitesse</option>';
+                const transmissions = transmissionData[marque][carrosserie] || [];
+                transmissions.forEach(boite => {
+                    const option = document.createElement('option');
+                    option.value = boite;
+                    option.textContent = boite;
+                    boiteSelect.appendChild(option);
+                });
+            } else {
+                boiteSelect.innerHTML = '<option value="" disabled selected>Choisissez une boîte de vitesse</option>';
+            }
+        }
+
+        marqueSelect.addEventListener('change', function() {
+            updateCarrosseries();
+            updateTransmissions();
+        });
+
+        carrosserieSelect.addEventListener('change', updateTransmissions);
+
+        updateCarrosseries();
+        updateTransmissions();
+    });
+</script>
