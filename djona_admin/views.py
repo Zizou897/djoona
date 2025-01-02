@@ -39,7 +39,6 @@ def IndexPage(request):
     if list_products.exists():
         whatsapp_message = list_products.first().whatsapp_message()
 
-    # Statuts
     vente_statut = EtatVehicule.objects.filter(nom='vente').first()
     location_statut = EtatVehicule.objects.filter(nom='location').first()
     
@@ -57,35 +56,28 @@ def IndexPage(request):
         filters = Q() 
     else:
         filters = Q()
-        # Appliquer les filtres de prix
         if min_price.isdigit():
             filters &= Q(prix__gte=int(min_price))
         if max_price.isdigit():
             filters &= Q(prix__lte=int(max_price))
-        # Appliquer le filtre de type
         if selected_type in ["occasion", "neuve"]:
             filters &= Q(type__iexact=selected_type)
 
-    # Filtrage des produits
     filtered_products = filter_products(all_filtered_products, filters)
     vente_products = filtered_products.filter(statut=vente_statut)
     location_products = filtered_products.filter(statut=location_statut)
     
 
-    # Message d'erreur si aucun produit ne correspond
     if not error_message and not filtered_products.exists():
         error_message = "Aucun véhicule ne correspond aux critères de recherche."
 
-    # Récupération des 6 marques distinctes
     unique_marques = (
         list_products.values('marque')
         .annotate(product_count=Count('id'))
         .order_by('-product_count')[:6]
     )
-    # Liste des marques sélectionnées
     selected_marques = [marque['marque'] for marque in unique_marques]
 
-    # Groupement des produits par marque et limité à 4 par marque
     products_by_marque = {
         marque: list_products.filter(marque=marque)[:4]
         for marque in selected_marques
@@ -96,28 +88,24 @@ def IndexPage(request):
     vente_marques = (
         vente_products.values_list('marque', flat=True)
         .distinct()
-        .order_by('marque')  # Facultatif : trier par ordre alphabétique
+        .order_by('marque')
     )
     location_marques = (
         location_products.values_list('marque', flat=True)
         .distinct()
-        .order_by('marque')  # Facultatif : trier par ordre alphabétique
+        .order_by('marque')
     )
 
-    # Filtrer les produits pour ces marques
     marque_filtered_products = filtered_products.filter(marque__in=selected_marques)
 
-    # Fonction pour obtenir le nombre d'images et l'URL de la première image
     def get_image_count_and_first_url(product):
         return product.image_count(), product.first_image_url()
     
-    # Compte des types de produits
     type_counts = Counter(product.type.lower() for product in vente_products if product.type)
 
-    # Contexte pour le rendu
     context = {
         "list_products": marque_filtered_products,
-        "products_by_marque": products_by_marque,  # Dictionnaire de produits par marque
+        "products_by_marque": products_by_marque,
         "message": error_message,
         "type_counts": list(type_counts.items()),
         "unique_marques": unique_marques,
@@ -138,87 +126,12 @@ def IndexPage(request):
 
 
 
-# def IndexPage(request):
-#     list_products = Produit.objects.all()
-    
-#     whatsapp_message = None
-#     if list_products.exists():
-#         whatsapp_message = list_products.first().whatsapp_message()
-
-#     vente_statut = EtatVehicule.objects.filter(nom='vente').first()
-#     location_statut = EtatVehicule.objects.filter(nom='location').first()
-    
-#     all_filtered_products = list_products.filter(
-#         Q(statut=vente_statut) | Q(statut=location_statut)
-#     )
-
-#     min_price = request.GET.get('min_price', '').strip()
-#     max_price = request.GET.get('max_price', '').strip()
-#     selected_type = request.GET.get('type', '').strip().lower()
-
-#     error_message = validate_price_filters(min_price, max_price)
-
-#     if error_message:
-#         filters = Q() 
-#     else:
-#         filters = Q()
-#         if min_price.isdigit():
-#             filters &= Q(prix__gte=int(min_price))
-#         if max_price.isdigit():
-#             filters &= Q(prix__lte=int(max_price))
-#         if selected_type in ["occasion", "neuve"]:
-#             filters &= Q(type__iexact=selected_type)
-
-#     filtered_products = filter_products(all_filtered_products, filters)
-#     vente_products = filtered_products.filter(statut=vente_statut)
-
-#     if not error_message and not filtered_products.exists():
-#         error_message = "Aucun véhicule ne correspond aux critères de recherche."
-
-#     grouped_products = defaultdict(list)
-#     for product in filtered_products:
-#         grouped_products[product.marque].append(product)
-
-#     unique_marques = list_products.values_list('marque', flat=True).distinct()
-#     unique_carrosseries = list_products.values_list('type', flat=True).distinct()
-#     unique_boites = list_products.values_list('transmission', flat=True).distinct()
-#     unique_carburants = list_products.values_list('carburant', flat=True).distinct()
-
-#     type_counts = Counter(product.type.lower() for product in vente_products if product.type)
-
-#     def get_image_count_and_first_url(product):
-#         return product.image_count(), product.first_image_url()
-
-#     context = {
-#         "list_products": filtered_products,
-#         "unique_titles": list(grouped_products.keys()),
-#         "message": error_message,
-#         "type_counts": list(type_counts.items()),
-#         "grouped_products": grouped_products,
-#         "unique_marques": unique_marques,
-#         "unique_type": unique_carrosseries,
-#         "unique_transmission": unique_boites,
-#         "unique_carburants": unique_carburants,
-#         "first_image_urls": [get_image_count_and_first_url(product)[1] for product in filtered_products],
-#         "image_counts": [get_image_count_and_first_url(product)[0] for product in filtered_products],
-#         "min_price": min_price,
-#         "max_price": max_price,
-#         "selected_type": selected_type,
-#         "whatsapp_message": whatsapp_message,
-#     }
-
-#     return render(request, "index.html", context)
-
-
-
 def searchCar(request):
-    # Récupération des paramètres de la requête
     marque = request.GET.get('marque', '').strip()
     carrosserie = request.GET.get('type', '').strip()
     boite = request.GET.get('transmission', '').strip()
     carburant = request.GET.get('carburant', '').strip()
 
-    # Gestion des messages d'erreur
     error_messages = {
         'marque': None,
         'type': None,
@@ -226,7 +139,6 @@ def searchCar(request):
         'carburant': None,
     }
 
-    # Préparation des filtres
     filtres = Q()
     if marque:
         filtres &= Q(marque__exact=marque)
@@ -248,26 +160,21 @@ def searchCar(request):
         if not Produit.objects.filter(carburant__exact=carburant).exists():
             error_messages['carburant'] = f"Aucun carburant ne correspond à '{carburant}'."
 
-    # Filtrage des produits
     produits = Produit.objects.filter(filtres) if filtres else Produit.objects.all()
 
-    # Gestion du message si aucun produit trouvé
     message = None
     if not produits.exists():
         message = "Aucun véhicule ne correspond à vos critères."
 
-    # Pagination des résultats
     paginator = Paginator(produits, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # Récupération des valeurs uniques
     unique_marques = Produit.objects.values_list('marque', flat=True).distinct()
     unique_carrosseries = Produit.objects.values_list('type', flat=True).distinct()
     unique_boites = Produit.objects.values_list('transmission', flat=True).distinct()
     unique_carburants = Produit.objects.values_list('carburant', flat=True).distinct()
 
-    # Contexte pour le template
     context = {
         'produits': produits,
         'message': message,
