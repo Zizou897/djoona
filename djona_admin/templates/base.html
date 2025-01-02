@@ -95,33 +95,6 @@
                     focusOnSelect: true
                 });
             });
-
-            document.addEventListener("DOMContentLoaded", function () {
-                const form = document.querySelector("form"); 
-                const submitButton = form.querySelector('button[type="submit"]');
-                const modalElement = document.getElementById('errorModal'); 
-                const modal = new bootstrap.Modal(modalElement, {
-                    backdrop: 'static',
-                    keyboard: false
-                });
-                const closeModalButton = document.getElementById('closeErrorModal'); 
-                
-                form.addEventListener("submit", function(event) {
-                    const marque = document.getElementById('marque').value;
-                    const carrosserie = document.getElementById('carrosserie').value;
-                    const boite = document.getElementById('boite').value;
-                    const carburant = document.getElementById('carburant').value;
-            
-                    if (!marque || !carrosserie || !boite || !carburant) {
-                        event.preventDefault();
-                        modal.show();
-                    }
-                });
-            
-                closeModalButton.addEventListener('click', function() {
-                    modal.hide();
-                });
-            });
             
             document.addEventListener("DOMContentLoaded", function () {
                 const modalElement = document.getElementById('contactModal');

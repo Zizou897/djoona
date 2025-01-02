@@ -1,39 +1,39 @@
 <div class="container rechercheMarque">
     <form method="get" action="{% url 'recherche' %}">
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-3 mb-3">
-                <select class="form-select" id="marque" name="marque">
-                    <option value="" disabled selected>Marque</option>
-                    {% for marque in unique_marques %}
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3 mb-3">
+                    <select class="form-select" id="marque" name="marque">
+                        <option value="" disabled selected>Marque</option>
+                        {% for marque in carburant_by_marque_and_carrosserie_and_transmission.keys %}
                         <option value="{{ marque }}">{{ marque }}</option>
-                    {% endfor %}
-                </select>
+                        {% endfor %}
+                    </select>
+                </div>
+            
+                <div class="col-12 col-md-6 col-lg-3 mb-3">
+                    <select class="form-select" id="carrosserie" name="carrosserie" disabled>
+                        <option value="" disabled selected>Carrosserie</option>
+                    </select>
+                </div>
+            
+                <div class="col-12 col-md-6 col-lg-3 mb-3">
+                    <select class="form-select" id="transmission" name="transmission" disabled>
+                        <option value="" disabled selected>Boite de vitesse</option>
+                    </select>
+                </div>
+            
+                <div class="col-12 col-md-6 col-lg-3 mb-3">
+                    <select class="form-select" id="carburant" name="carburant" disabled>
+                        <option value="" disabled selected>Carburant</option>
+                    </select>
+                </div>
             </div>
             
-            <div class="col-12 col-md-6 col-lg-3 mb-3">
-                <select class="form-select" id="carrosserie" name="carrosserie">
-                    <option value="" disabled selected>Carrosserie</option>
-                </select>
-            </div>
-            
-            <div class="col-12 col-md-6 col-lg-3 mb-3">
-                <select class="form-select" id="boite" name="boite">
-                    <option value="" disabled selected>Boîte de vitesse</option>
-                </select>
-            </div>
-            
-
-            <div class="col-12 col-md-6 col-lg-3 mb-3">
-                <select class="form-select" id="carburant" name="carburant">
-                    <option value="" disabled selected>Carburant</option>
-                    {% for carburant in unique_carburants %}
-                        <option value="{{ carburant }}">{{ carburant }}</option>
-                    {% endfor %}
-                </select>
-            </div>
 
             <div class="col-12 text-center">
-                <button class="btn btn-outline-secondary w-100 w-md-auto" type="submit" style="background: #154698; color: #fff;">
+                <button class="btn btn-outline-secondary w-100 w-md-auto" type="submit" style="background: #154698; color: #fff;"
+                data-bs-toggle="modal" data-bs-target="#errorModal">
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17.9542 17.7708L14.0284 13.8645C14.6013 13.1874 15.0245 12.4257 15.2979 11.5793C15.5714 10.733 15.6755 9.87362 15.6104 9.00122C15.5583 8.1158 15.337 7.27271 14.9464 6.47192C14.5557 5.67114 14.0349 4.97127 13.3839 4.37231C12.7328 3.77336 11.9939 3.32088 11.1671 3.01489C10.3402 2.7089 9.48411 2.56242 8.5987 2.57544C7.71328 2.60148 6.86042 2.78703 6.0401 3.13208C5.21979 3.47713 4.49714 3.96216 3.87214 4.58716C3.24714 5.21216 2.76211 5.93481 2.41706 6.75513C2.072 7.57544 1.88646 8.4283 1.86042 9.31372C1.8474 10.1991 1.99388 11.0553 2.29987 11.8821C2.60586 12.7089 3.05833 13.4478 3.65729 14.0989C4.25625 14.7499 4.95612 15.2708 5.7569 15.6614C6.55768 16.052 7.40078 16.2734 8.2862 16.3254C9.15859 16.3905 10.018 16.2864 10.8643 16.0129C11.7107 15.7395 12.4724 15.3163 13.1495 14.7434L17.0557 18.6692C17.0948 18.6952 17.1306 18.718 17.1632 18.7375C17.1957 18.7571 17.2315 18.7799 17.2706 18.8059C17.3096 18.8189 17.3487 18.8287 17.3878 18.8352C17.4268 18.8417 17.4659 18.845 17.5049 18.845C17.544 18.845 17.5831 18.8417 17.6221 18.8352C17.6612 18.8287 17.7003 18.8189 17.7393 18.8059C17.7784 18.7799 17.8142 18.7571 17.8467 18.7375C17.8793 18.718 17.9151 18.6952 17.9542 18.6692C17.9802 18.6301 18.003 18.5943 18.0225 18.5618C18.0421 18.5292 18.0648 18.4934 18.0909 18.4543C18.1039 18.4153 18.1137 18.3762 18.1202 18.3372C18.1267 18.2981 18.1299 18.259 18.1299 18.22C18.1299 18.1809 18.1267 18.1418 18.1202 18.1028C18.1137 18.0637 18.1039 18.0247 18.0909 17.9856C18.0648 17.9465 18.0421 17.9107 18.0225 17.8782C18.003 17.8456 17.9802 17.8098 17.9542 17.7708ZM3.12995 9.46997C3.12995 8.91008 3.21133 8.36646 3.37409 7.83911C3.53685 7.31177 3.77448 6.81372 4.08698 6.34497C4.38646 5.87622 4.75104 5.46606 5.18073 5.1145C5.61042 4.76294 6.08568 4.48299 6.60651 4.27466C7.11432 4.06633 7.64492 3.93286 8.19831 3.87427C8.75169 3.81567 9.30182 3.84497 9.8487 3.96216C10.3956 4.06633 10.9132 4.24862 11.4014 4.50903C11.8897 4.76945 12.3357 5.09497 12.7393 5.4856C13.1299 5.88924 13.4555 6.33521 13.7159 6.82349C13.9763 7.31177 14.1586 7.82935 14.2628 8.37622C14.3799 8.9231 14.4092 9.47323 14.3507 10.0266C14.2921 10.58 14.1586 11.1106 13.9503 11.6184C13.7419 12.1392 13.462 12.6145 13.1104 13.0442C12.7589 13.4739 12.3487 13.8385 11.8799 14.1379C11.4112 14.4504 10.9132 14.6881 10.3858 14.8508C9.85846 15.0136 9.31484 15.095 8.75495 15.095C8.01276 15.095 7.29661 14.9517 6.60651 14.6653C5.91641 14.3788 5.30443 13.9752 4.77057 13.4543C4.24974 12.9205 3.84609 12.3085 3.55964 11.6184C3.27318 10.9283 3.12995 10.2122 3.12995 9.46997Z" fill="white"/>
                     </svg>                        
@@ -44,81 +44,136 @@
     </form>
 </div>
 
-
-
 <!-- Modal d'erreur -->
 <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="errorModalLabel">
-                    <span class="text-danger"><i class="bi bi-exclamation-circle-fill"></i> Erreur de formulaire</span>
+                    <span class="text-danger"><i class="bi bi-exclamation-circle-fill"></i> Erreur de formulaire</span>    
                 </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center">
-                <p class="mt-3">Veuillez remplir tous les champs avant de soumettre le formulaire.</p>
+            <div class="modal-body">
+                Veuillez sélectionner au moins un critère avant de lancer la recherche.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="closeErrorModal" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
 </div>
 
 
+
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('.rechercheMarque form');
+        const marqueSelect = document.getElementById('marque');
+        const carrosserieSelect = document.getElementById('carrosserie');
+        const transmissionSelect = document.getElementById('transmission');
+        const carburantSelect = document.getElementById('carburant');
+    
+        const errorModal = new bootstrap.Modal(document.getElementById('errorModal'), {
+            backdrop: 'static', 
+            keyboard: false,   
+        });
+    
+        form.addEventListener('submit', function (event) {
+            if (
+                !marqueSelect.value &&
+                !carrosserieSelect.value &&
+                !transmissionSelect.value &&
+                !carburantSelect.value
+            ) {
+                event.preventDefault();
+                errorModal.show();
+            }
+        });
+    
+        // Supprimer le fond noir après la fermeture
+        const modalElement = document.getElementById('errorModal');
+        modalElement.addEventListener('hidden.bs.modal', function () {
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
+            document.body.classList.remove('modal-open');
+            document.body.style.paddingRight = '';
+        });
+    });
+    
+
+
     document.addEventListener('DOMContentLoaded', function () {
         const marqueSelect = document.getElementById('marque');
         const carrosserieSelect = document.getElementById('carrosserie');
-        const boiteSelect = document.getElementById('boite');
+        const transmissionSelect = document.getElementById('transmission');
+        const carburantSelect = document.getElementById('carburant');
 
-        const transmissionData = {{ transmission_by_marque_and_carrosserie|safe }};
+        const carburantData = {{ carburant_by_marque_and_carrosserie_and_transmission|safe }};
 
-        function updateCarrosseries() {
+        marqueSelect.addEventListener('change', function () {
             const marque = marqueSelect.value;
 
-            if (marque) {
-                carrosserieSelect.innerHTML = '<option value="" disabled selected>Choisissez une carrosserie</option>';
-                const carrossseries = Object.keys(transmissionData[marque] || {});
-                carrossseries.forEach(carrosserie => {
+            carrosserieSelect.innerHTML = '<option value="" disabled selected>Choisissez une carrosserie</option>';
+            transmissionSelect.innerHTML = '<option value="" disabled selected>Choisissez une transmission</option>';
+            carburantSelect.innerHTML = '<option value="" disabled selected>Choisissez un carburant</option>';
+            carrosserieSelect.disabled = true;
+            transmissionSelect.disabled = true;
+            carburantSelect.disabled = true;
+
+            if (marque && carburantData[marque]) {
+                const carrossOptions = Object.keys(carburantData[marque]);
+                carrossOptions.forEach(carrosserie => {
                     const option = document.createElement('option');
                     option.value = carrosserie;
                     option.textContent = carrosserie;
                     carrosserieSelect.appendChild(option);
                 });
-            } else {
-                carrosserieSelect.innerHTML = '<option value="" disabled selected>Choisissez une carrosserie</option>';
+                carrosserieSelect.disabled = false;
             }
+        });
 
-*            boiteSelect.innerHTML = '<option value="" disabled selected>Choisissez une boîte de vitesse</option>';
-        }
-
-*        function updateTransmissions() {
+        carrosserieSelect.addEventListener('change', function () {
             const marque = marqueSelect.value;
             const carrosserie = carrosserieSelect.value;
 
-            if (marque && carrosserie) {
-                boiteSelect.innerHTML = '<option value="" disabled selected>Choisissez une boîte de vitesse</option>';
-                const transmissions = transmissionData[marque][carrosserie] || [];
-                transmissions.forEach(boite => {
-                    const option = document.createElement('option');
-                    option.value = boite;
-                    option.textContent = boite;
-                    boiteSelect.appendChild(option);
-                });
-            } else {
-                boiteSelect.innerHTML = '<option value="" disabled selected>Choisissez une boîte de vitesse</option>';
-            }
-        }
+            transmissionSelect.innerHTML = '<option value="" disabled selected>Choisissez une transmission</option>';
+            carburantSelect.innerHTML = '<option value="" disabled selected>Choisissez un carburant</option>';
+            transmissionSelect.disabled = true;
+            carburantSelect.disabled = true;
 
-        marqueSelect.addEventListener('change', function() {
-            updateCarrosseries();
-            updateTransmissions();
+            if (marque && carrosserie && carburantData[marque][carrosserie]) {
+                const transOptions = Object.keys(carburantData[marque][carrosserie]);
+                transOptions.forEach(transmission => {
+                    const option = document.createElement('option');
+                    option.value = transmission;
+                    option.textContent = transmission;
+                    transmissionSelect.appendChild(option);
+                });
+                transmissionSelect.disabled = false;
+            }
         });
 
-        carrosserieSelect.addEventListener('change', updateTransmissions);
+        transmissionSelect.addEventListener('change', function () {
+            const marque = marqueSelect.value;
+            const carrosserie = carrosserieSelect.value;
+            const transmission = transmissionSelect.value;
 
-        updateCarrosseries();
-        updateTransmissions();
+            carburantSelect.innerHTML = '<option value="" disabled selected>Choisissez un carburant</option>';
+            carburantSelect.disabled = true;
+
+            if (marque && carrosserie && transmission && carburantData[marque][carrosserie][transmission]) {
+                const carburantOptions = carburantData[marque][carrosserie][transmission];
+                carburantOptions.forEach(carburant => {
+                    const option = document.createElement('option');
+                    option.value = carburant;
+                    option.textContent = carburant;
+                    carburantSelect.appendChild(option);
+                });
+                carburantSelect.disabled = false;
+            }
+        });
     });
 </script>

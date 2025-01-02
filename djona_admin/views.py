@@ -127,17 +127,34 @@ def IndexPage(request):
     
     carrosserie_by_marque = defaultdict(set)
     transmission_by_marque_and_carrosserie = defaultdict(lambda: defaultdict(set))
+    
+    carburant_by_marque_and_carrosserie_and_transmission = defaultdict(
+        lambda: defaultdict(lambda: defaultdict(set))
+    )
+    
     produits = Produit.objects.all()
     
     for produit in produits:
         carrosserie_by_marque[produit.marque].add(produit.type)
     for produit in produits:
         transmission_by_marque_and_carrosserie[produit.marque][produit.type].add(produit.transmission)
+    for produit in produits:
+        carburant_by_marque_and_carrosserie_and_transmission[produit.marque][produit.type][produit.transmission].add(produit.carburant)
 
     carrosserie_by_marque = {marque: list(types) for marque, types in carrosserie_by_marque.items()}
     transmission_by_marque_and_carrosserie = {
         marque: {carrosserie: list(transmissions) for carrosserie, transmissions in carross_dict.items()}
         for marque, carross_dict in transmission_by_marque_and_carrosserie.items()
+    }
+    carburant_by_marque_and_carrosserie_and_transmission = {
+        marque: {
+            carrosserie: {
+                transmission: list(carburants)
+                for transmission, carburants in trans_dict.items()
+            }
+            for carrosserie, trans_dict in carross_dict.items()
+        }
+        for marque, carross_dict in carburant_by_marque_and_carrosserie_and_transmission.items()
     }
 
     context = {
@@ -164,6 +181,7 @@ def IndexPage(request):
         "unique_marques": list(carrosserie_by_marque.keys()),
         "transmission_by_marque_and_carrosserie": transmission_by_marque_and_carrosserie,
         "unique_marques": list(transmission_by_marque_and_carrosserie.keys()),
+        "carburant_by_marque_and_carrosserie_and_transmission": carburant_by_marque_and_carrosserie_and_transmission,
     }
 
     return render(request, "index.html", context)
