@@ -28,9 +28,6 @@ def filter_products(base_queryset, filters):
 
 
 
-from collections import Counter
-from django.db.models import Q, Count
-from .models import Produit, EtatVehicule
 
 def IndexPage(request):
     list_products = Produit.objects.all()
