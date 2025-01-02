@@ -69,6 +69,8 @@ def IndexPage(request):
     # Filtrage des produits
     filtered_products = filter_products(all_filtered_products, filters)
     vente_products = filtered_products.filter(statut=vente_statut)
+    location_products = filtered_products.filter(statut=location_statut)
+    
 
     # Message d'erreur si aucun produit ne correspond
     if not error_message and not filtered_products.exists():
@@ -88,8 +90,16 @@ def IndexPage(request):
         marque: list_products.filter(marque=marque)[:4]
         for marque in selected_marques
     }
+    products_by_marque_list = [
+        (marque, products) for marque, products in products_by_marque.items()
+    ]
     vente_marques = (
         vente_products.values_list('marque', flat=True)
+        .distinct()
+        .order_by('marque')  # Facultatif : trier par ordre alphabétique
+    )
+    location_marques = (
+        location_products.values_list('marque', flat=True)
         .distinct()
         .order_by('marque')  # Facultatif : trier par ordre alphabétique
     )
@@ -119,6 +129,8 @@ def IndexPage(request):
         "whatsapp_message": whatsapp_message,        
         "selected_marques": selected_marques,
         "vente_marques": vente_marques,
+        "location_marques": location_marques,
+        "products_by_marque_list": products_by_marque_list,
     }
 
     return render(request, "index.html", context)

@@ -775,7 +775,6 @@ body {
 #all-vehicles {
     height: 100%;
     white-space: nowrap;
-    overflow-x: hidden;
 }
 
 .vehicles-container {
