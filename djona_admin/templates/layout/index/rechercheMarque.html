@@ -4,7 +4,7 @@
             <div class="col-12 col-md-6 col-lg-3 mb-3">
                 <select class="form-select" id="marque" name="marque">
                     <option value="" disabled selected>Marque</option>
-                    {% for marque in unique_marques %}
+                    {% for marque in unique_marques_recherche %}
                         <option value="{{ marque }}">{{ marque }}</option>
                     {% endfor %}
                 </select>

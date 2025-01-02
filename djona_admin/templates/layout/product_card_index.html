@@ -94,7 +94,7 @@
                     {% for product in products %}
                         {% if product.statut|lower == 'vente' %}
                             <div class="vehicle-card-Mom flex-shrink-0" style="width: 320px;">
-                                <div class="vehicle-card rounded h-100" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                <div class="vehicle-card rounded h-100" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;margin:10px;">
                                     <div class="vehicle-img rounded-top overflow-hidden" style="height: 200px;">
                                         {% if first_image_urls|length > forloop.counter0 %}
                                             <img src="{{ first_image_urls|first }}" alt="{{ product.nom }}" class="img-fluid w-100 h-100 object-fit-cover">

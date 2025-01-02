@@ -73,7 +73,32 @@ def IndexPage(request):
         .annotate(product_count=Count('id'))
         .order_by('-product_count')[:6]
     )
+    unique_marques_recherche = (
+        list_products.values('marque')
+        .annotate(product_count=Count('id'))
+        .order_by('-product_count')[:6]
+    )
+    unique_type = (
+        list_products.values('type')
+        .annotate(product_count=Count('id'))
+        .order_by('-product_count')[:6]
+    )
+    unique_transmission = (
+        list_products.values('transmission')
+        .annotate(product_count=Count('id'))
+        .order_by('-product_count')[:6]
+    )
+    unique_carburants = (
+        list_products.values('carburant')
+        .annotate(product_count=Count('id'))
+        .order_by('-product_count')[:6]
+    )
     selected_marques = [marque['marque'] for marque in unique_marques]
+    unique_marques_recherche = [marque['marque'] for marque in unique_marques_recherche]
+    unique_type = [type['type'] for type in unique_type]
+    unique_transmission = [transmission['transmission'] for transmission in unique_transmission]
+    unique_carburants = [carburant['carburant'] for carburant in unique_carburants]
+    
 
     products_by_marque = {
         marque: list_products.filter(marque=marque)[:4]
@@ -106,6 +131,10 @@ def IndexPage(request):
         "message": error_message,
         "type_counts": list(type_counts.items()),
         "unique_marques": unique_marques,
+        "unique_marques_recherche": unique_marques_recherche,
+        "unique_type": unique_type,
+        "unique_transmission": unique_transmission,
+        "unique_carburants": unique_carburants,
         "first_image_urls": [get_image_count_and_first_url(product)[1] for product in filtered_products],
         "image_counts": [get_image_count_and_first_url(product)[0] for product in filtered_products],
         "min_price": min_price,
