@@ -204,23 +204,23 @@ def searchCar(request):
 
     filtres = Q()
     if marque:
-        filtres &= Q(marque__exact=marque)
-        if not Produit.objects.filter(marque__exact=marque).exists():
+        filtres &= Q(marque__iexact=marque)
+        if not Produit.objects.filter(marque__iexact=marque).exists():
             error_messages['marque'] = f"Aucune marque ne correspond à '{marque}'."
 
     if carrosserie:
-        filtres &= Q(type__exact=carrosserie)
-        if not Produit.objects.filter(type__exact=carrosserie).exists():
+        filtres &= Q(type__iexact=carrosserie)
+        if not Produit.objects.filter(type__iexact=carrosserie).exists():
             error_messages['type'] = f"Aucun type de carrosserie ne correspond à '{carrosserie}'."
 
     if boite:
-        filtres &= Q(transmission__exact=boite)
-        if not Produit.objects.filter(transmission__exact=boite).exists():
+        filtres &= Q(transmission__iexact=boite)
+        if not Produit.objects.filter(transmission__iexact=boite).exists():
             error_messages['transmission'] = f"Aucune transmission ne correspond à '{boite}'."
 
     if carburant:
-        filtres &= Q(carburant__exact=carburant)
-        if not Produit.objects.filter(carburant__exact=carburant).exists():
+        filtres &= Q(carburant__iexact=carburant)
+        if not Produit.objects.filter(carburant__iexact=carburant).exists():
             error_messages['carburant'] = f"Aucun carburant ne correspond à '{carburant}'."
 
     produits = Produit.objects.filter(filtres) if filtres else Produit.objects.all()
@@ -239,7 +239,7 @@ def searchCar(request):
     unique_carburants = Produit.objects.values_list('carburant', flat=True).distinct()
 
     context = {
-        'produits': produits,
+        'produits': page_obj.object_list,
         'message': message,
         'error_messages': error_messages, 
         "is_location_page": False,
