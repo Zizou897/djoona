@@ -106,8 +106,6 @@ body {
     transform: translate(-50%, -50%);
 }
 
-}
-
 .search-section {
     padding: 30px 0;
     text-align: center;
@@ -773,3 +771,18 @@ body {
 }
 
 
+
+#all-vehicles {
+    height: 100%;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+.vehicles-container {
+    display: flex;
+    gap: 20px;
+}
+
+.vehicle-card-Mom {
+    display: inline-block;
+}

@@ -27,6 +27,11 @@ def filter_products(base_queryset, filters):
     return base_queryset.filter(filters) if filters else base_queryset
 
 
+
+from collections import Counter
+from django.db.models import Q, Count
+from .models import Produit, EtatVehicule
+
 def IndexPage(request):
     list_products = Produit.objects.all()
     
@@ -69,44 +74,128 @@ def IndexPage(request):
     if not error_message and not filtered_products.exists():
         error_message = "Aucun véhicule ne correspond aux critères de recherche."
 
-    # Regroupement des produits par marque
-    grouped_products = defaultdict(list)
-    for product in filtered_products:
-        grouped_products[product.marque].append(product)
+    # Récupération des 6 marques distinctes
+    unique_marques = (
+        list_products.values('marque')
+        .annotate(product_count=Count('id'))
+        .order_by('-product_count')[:6]
+    )
+    # Liste des marques sélectionnées
+    selected_marques = [marque['marque'] for marque in unique_marques]
 
-    # Récupération des valeurs distinctes
-    unique_marques = list_products.values_list('marque', flat=True).distinct()
-    unique_carrosseries = list_products.values_list('type', flat=True).distinct()
-    unique_boites = list_products.values_list('transmission', flat=True).distinct()
-    unique_carburants = list_products.values_list('carburant', flat=True).distinct()
+    # Groupement des produits par marque et limité à 4 par marque
+    products_by_marque = {
+        marque: list_products.filter(marque=marque)[:4]
+        for marque in selected_marques
+    }
+    vente_marques = (
+        vente_products.values_list('marque', flat=True)
+        .distinct()
+        .order_by('marque')  # Facultatif : trier par ordre alphabétique
+    )
 
-    # Comptage des types
-    type_counts = Counter(product.type.lower() for product in vente_products if product.type)
+    # Filtrer les produits pour ces marques
+    marque_filtered_products = filtered_products.filter(marque__in=selected_marques)
 
-    # Fonction pour image
+    # Fonction pour obtenir le nombre d'images et l'URL de la première image
     def get_image_count_and_first_url(product):
         return product.image_count(), product.first_image_url()
+    
+    # Compte des types de produits
+    type_counts = Counter(product.type.lower() for product in vente_products if product.type)
 
     # Contexte pour le rendu
     context = {
-        "list_products": filtered_products,
-        "unique_titles": list(grouped_products.keys()),
+        "list_products": marque_filtered_products,
+        "products_by_marque": products_by_marque,  # Dictionnaire de produits par marque
         "message": error_message,
         "type_counts": list(type_counts.items()),
-        "grouped_products": grouped_products,
         "unique_marques": unique_marques,
-        "unique_type": unique_carrosseries,
-        "unique_transmission": unique_boites,
-        "unique_carburants": unique_carburants,
         "first_image_urls": [get_image_count_and_first_url(product)[1] for product in filtered_products],
         "image_counts": [get_image_count_and_first_url(product)[0] for product in filtered_products],
-        "min_price": min_price,  # Assurez-vous que ces variables sont passées
-        "max_price": max_price,  # Assurez-vous que ces variables sont passées
+        "min_price": min_price,
+        "max_price": max_price,
         "selected_type": selected_type,
-        "whatsapp_message": whatsapp_message,
+        "whatsapp_message": whatsapp_message,        
+        "selected_marques": selected_marques,
+        "vente_marques": vente_marques,
     }
 
     return render(request, "index.html", context)
+
+
+
+
+# def IndexPage(request):
+#     list_products = Produit.objects.all()
+    
+#     whatsapp_message = None
+#     if list_products.exists():
+#         whatsapp_message = list_products.first().whatsapp_message()
+
+#     vente_statut = EtatVehicule.objects.filter(nom='vente').first()
+#     location_statut = EtatVehicule.objects.filter(nom='location').first()
+    
+#     all_filtered_products = list_products.filter(
+#         Q(statut=vente_statut) | Q(statut=location_statut)
+#     )
+
+#     min_price = request.GET.get('min_price', '').strip()
+#     max_price = request.GET.get('max_price', '').strip()
+#     selected_type = request.GET.get('type', '').strip().lower()
+
+#     error_message = validate_price_filters(min_price, max_price)
+
+#     if error_message:
+#         filters = Q() 
+#     else:
+#         filters = Q()
+#         if min_price.isdigit():
+#             filters &= Q(prix__gte=int(min_price))
+#         if max_price.isdigit():
+#             filters &= Q(prix__lte=int(max_price))
+#         if selected_type in ["occasion", "neuve"]:
+#             filters &= Q(type__iexact=selected_type)
+
+#     filtered_products = filter_products(all_filtered_products, filters)
+#     vente_products = filtered_products.filter(statut=vente_statut)
+
+#     if not error_message and not filtered_products.exists():
+#         error_message = "Aucun véhicule ne correspond aux critères de recherche."
+
+#     grouped_products = defaultdict(list)
+#     for product in filtered_products:
+#         grouped_products[product.marque].append(product)
+
+#     unique_marques = list_products.values_list('marque', flat=True).distinct()
+#     unique_carrosseries = list_products.values_list('type', flat=True).distinct()
+#     unique_boites = list_products.values_list('transmission', flat=True).distinct()
+#     unique_carburants = list_products.values_list('carburant', flat=True).distinct()
+
+#     type_counts = Counter(product.type.lower() for product in vente_products if product.type)
+
+#     def get_image_count_and_first_url(product):
+#         return product.image_count(), product.first_image_url()
+
+#     context = {
+#         "list_products": filtered_products,
+#         "unique_titles": list(grouped_products.keys()),
+#         "message": error_message,
+#         "type_counts": list(type_counts.items()),
+#         "grouped_products": grouped_products,
+#         "unique_marques": unique_marques,
+#         "unique_type": unique_carrosseries,
+#         "unique_transmission": unique_boites,
+#         "unique_carburants": unique_carburants,
+#         "first_image_urls": [get_image_count_and_first_url(product)[1] for product in filtered_products],
+#         "image_counts": [get_image_count_and_first_url(product)[0] for product in filtered_products],
+#         "min_price": min_price,
+#         "max_price": max_price,
+#         "selected_type": selected_type,
+#         "whatsapp_message": whatsapp_message,
+#     }
+
+#     return render(request, "index.html", context)
 
 
 
