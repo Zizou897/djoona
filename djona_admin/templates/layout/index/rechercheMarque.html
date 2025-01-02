@@ -55,7 +55,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Veuillez sélectionner au moins un critère avant de lancer la recherche.
+                Veuillez sélectionner tous les critères avant de lancer la recherche.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
@@ -75,34 +75,36 @@
         const carburantSelect = document.getElementById('carburant');
     
         const errorModal = new bootstrap.Modal(document.getElementById('errorModal'), {
-            backdrop: 'static', 
-            keyboard: false,   
+            backdrop: 'static', // Empêche la fermeture en cliquant en dehors
+            keyboard: false,    // Désactive la fermeture avec la touche "Échap"
         });
     
         form.addEventListener('submit', function (event) {
             if (
-                !marqueSelect.value &&
-                !carrosserieSelect.value &&
-                !transmissionSelect.value &&
+                !marqueSelect.value || 
+                !carrosserieSelect.value || 
+                !transmissionSelect.value || 
                 !carburantSelect.value
             ) {
                 event.preventDefault();
-                errorModal.show();
+                errorModal.show();   
             }
         });
     
-        // Supprimer le fond noir après la fermeture
         const modalElement = document.getElementById('errorModal');
         modalElement.addEventListener('hidden.bs.modal', function () {
             const backdrop = document.querySelector('.modal-backdrop');
             if (backdrop) {
                 backdrop.remove();
             }
-            document.body.classList.remove('modal-open');
+            document.body.classList.remove('modal-open'); 
             document.body.style.paddingRight = '';
         });
-    });
     
+        modalElement.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+    });
 
 
     document.addEventListener('DOMContentLoaded', function () {
