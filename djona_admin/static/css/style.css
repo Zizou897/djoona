@@ -27,7 +27,7 @@ body {
 }
 
 .nav-link:hover {
-    color: #0021fa !important;
+    color: #f0822e !important;
 }
 
 .navbar-brand, .nav-link, .nav-item {
@@ -664,7 +664,7 @@ body {
     
 
     .carrosserie_tel {
-        margin-top: 30px; /* Ajustez cette valeur pour les téléphones */
+        margin-top: 0px; /* Ajustez cette valeur pour les téléphones */
     }
 
     .carrosserie_tel .carousel-inner {
@@ -684,7 +684,7 @@ body {
     }
 
     .voiture_ideale {
-        margin-top: -60px;
+        margin-top: 0px;
         margin-bottom: 180px;
     }
 
@@ -705,11 +705,18 @@ body {
     }
 
     .serviceAdapte {
-        padding-top: 200px;
+        padding-top: 40px;
+    }
+    .serviceAdapte h2 {
+        font-size: 16px;
     }
 
     .trouve {
-        padding-top: -40px;    
+        margin-top: -70px;    
+    }
+    .trouve h3 {
+        padding: -20px 50px -30px;    
+        color: #000;
     }
 
     .pub {
@@ -723,6 +730,19 @@ body {
     .form-row .col-md-6 {
         margin-bottom: 15px;
     }
+
+
+    .vehicles-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .vehicles-container > * {
+        width: 100%;
+    }
+    
     
     .roulezEsprit .btn {
         margin-top: 25px;
@@ -767,6 +787,10 @@ body {
         height: auto;
         margin: 0 10px;
         border-radius: 8px;
+    }
+
+    .vehicle-card-Mom {
+        width: 400px;
     }
 }
 

@@ -4,7 +4,7 @@
     </button>
 
     {% for marque in vente_marques %}
-        <button class="nav-link" id="{{ marque }}-tab" data-bs-toggle="tab" data-bs-target="#{{ marque }}" type="button" role="tab" aria-controls="{{ marque }}" aria-selected="false">
+        <button class="nav-link" id="{{ marque|slugify }}-tab" data-bs-toggle="tab" data-bs-target="#{{ marque|slugify }}" type="button" role="tab" aria-controls="{{ marque|slugify }}" aria-selected="false">
             {{ marque|capfirst }}
         </button>
     {% endfor %}
@@ -21,7 +21,7 @@
             {% endif %}
     
             <div class="vehicles-container d-flex" style="transition: transform 0.5s ease-in-out;">
-                {% for Product in list_products|slice:":8" %}
+                {% for Product in list_products|slice:":4" %}
                     {% if Product.statut|lower == 'vente' %}
                         <div class="vehicle-card-Mom flex-shrink-0" style="width: 320px;">
                             <div class="vehicle-card rounded h-100" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
@@ -87,8 +87,8 @@
     </div>
 
     {% for marque, products in products_by_marque.items %}
-        <div class="tab-pane fade" id="{{ marque }}" role="tabpanel" aria-labelledby="{{ marque }}-tab">
-            <div id="{{ marque }}-vehicles" class="d-flex flex-wrap">
+        <div class="tab-pane fade" id="{{ marque|slugify }}" role="tabpanel" aria-labelledby="{{ marque|slugify }}-tab">
+            <div id="{{ marque|slugify }}-vehicles" class="d-flex flex-wrap">
 
                 {% if products %}
                     {% for product in products %}
