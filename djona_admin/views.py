@@ -37,6 +37,7 @@ def IndexPage(request):
         whatsapp_message = list_products.first().whatsapp_message()
 
     vente_statut = EtatVehicule.objects.filter(nom='vente').first()
+    vendu_statut = EtatVehicule.objects.filter(nom='vendu').first()
     location_statut = EtatVehicule.objects.filter(nom='location').first()
     
     all_filtered_products = list_products.filter(
@@ -182,6 +183,7 @@ def IndexPage(request):
         "transmission_by_marque_and_carrosserie": transmission_by_marque_and_carrosserie,
         "unique_marques": list(transmission_by_marque_and_carrosserie.keys()),
         "carburant_by_marque_and_carrosserie_and_transmission": carburant_by_marque_and_carrosserie_and_transmission,
+        'vendu_statut': vendu_statut,
     }
 
     return render(request, "index.html", context)

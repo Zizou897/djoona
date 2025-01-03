@@ -43,22 +43,22 @@
                     <hr class="my-2">
                     
                     <p class="text-muted mb-2">
-                        Carburant : <strong>{{ product.carburant }}</strong>
+                        Carburant : <strong>{{ product.carburant|capfirst }}</strong>
                     </p>
                     <hr class="my-2">
                     
                     <p class="text-muted mb-2">
-                        Carrosserie : <strong>{{ product.type }}</strong>
+                        Carrosserie : <strong>{{ product.type|capfirst }}</strong>
                     </p>
                     <hr class="my-2">
                     
                     <p class="text-muted mb-2">
-                        Kilométrage : <strong>{{ product.kilometrage }} km</strong>
+                        Kilométrage : <strong>{{ product.kilometrage }} Km</strong>
                     </p>
                     <hr class="my-2">
                     
                     <p class="text-muted mb-2">
-                        Transmission : <strong>{{ product.transmission }}</strong>
+                        Transmission : <strong>{{ product.transmission|capfirst }}</strong>
                     </p>
                     <hr class="my-2">
 
@@ -69,29 +69,35 @@
                     
                     <h5 class="mb-2 fw-bold">{{ product.prix }} F CFA</h5>
 
-                    <div class="row g-3 mt-2">
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <a href="{% url 'contact' product.id %}" class="btn btn-outline-primary w-100 py-3 d-flex align-items-center justify-content-center">
-                                <i class="bi bi-envelope me-2"></i> Je suis intéressé
-                            </a>
+                    <div class="col-md-12 text-md-end">
+                        <div class="row g-3 mt-2">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <a href="{% url 'contact' product.id %}" 
+                                   class="btn btn-outline-primary w-100 py-3 d-flex align-items-center justify-content-center 
+                                   {% if product.statut|lower == 'vendu' %}disabled{% endif %}">
+                                    <i class="bi bi-envelope me-2"></i> Intéressé
+                                </a>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <a href="https://wa.me/22540018376?text={{ whatsapp_message|urlencode }}" 
+                                   target="_blank" 
+                                   class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center 
+                                   {% if product.statut|lower == 'vendu' %}disabled{% endif %}">
+                                    <i class="bi bi-whatsapp me-2"></i> WhatsApp
+                                </a>
+                            </div>
+                    
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <button class="btn btn-outline-secondary w-100 w-md-auto 
+                                {% if product.statut|lower == 'vendu' or product.statut|lower == 'vente' %}disabled{% endif %}" 
+                                type="button" style="background: #154698; color: #fff; padding: 15px;" data-bs-toggle="modal" data-bs-target="#contactModal">
+                                    <i class="bi bi-calendar-check me-2"></i> Réservation
+                                </button>
+                            </div>
+                                       
                         </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <a href="https://wa.me/22540018376?text={{ whatsapp_message|urlencode }}" 
-                                target="_blank" 
-                                class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center">
-                                <i class="bi bi-whatsapp me-2"></i> Contacter par WhatsApp
-                            </a>
-                        </div>
-            
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <button class="btn btn-outline-secondary w-100 w-md-auto 
-                            {% if product.statut|lower != 'location' %}disabled{% endif %}" 
-                            type="button" style="background: #154698; color: #fff; padding: 15px;" data-bs-toggle="modal" data-bs-target="#contactModal">
-                                <i class="bi bi-calendar-check me-2"></i> Faites votre réservation
-                            </button>
-                        </div>            
-            
                     </div>
+
                 </div>
             </div>
         </div><br/><br/>
@@ -670,28 +676,32 @@
                 <div class="col-md-3 text-md-end">
                     <div class="row g-3 mt-2">
                         <div class="col-12 col-md-6 col-lg-6">
-                            <a href="{% url 'contact' product.id %}" class="btn btn-outline-primary w-100 py-3 d-flex align-items-center justify-content-center">
+                            <a href="{% url 'contact' product.id %}" 
+                               class="btn btn-outline-primary w-100 py-3 d-flex align-items-center justify-content-center 
+                               {% if product.statut|lower == 'vendu' %}disabled{% endif %}">
                                 <i class="bi bi-envelope me-2"></i> Intéressé
                             </a>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <a href="https://wa.me/22540018376?text={{ whatsapp_message|urlencode }}" 
-                                target="_blank" 
-                                class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center">
+                               target="_blank" 
+                               class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center 
+                               {% if product.statut|lower == 'vendu' %}disabled{% endif %}">
                                 <i class="bi bi-whatsapp me-2"></i> WhatsApp
                             </a>
                         </div>
-            
+                
                         <div class="col-12 col-md-12 col-lg-12">
                             <button class="btn btn-outline-secondary w-100 w-md-auto 
-                            {% if product.statut|lower != 'location' %}disabled{% endif %}" 
+                            {% if product.statut|lower == 'vendu' or product.statut|lower == 'vente' %}disabled{% endif %}" 
                             type="button" style="background: #154698; color: #fff; padding: 15px;" data-bs-toggle="modal" data-bs-target="#contactModal">
                                 <i class="bi bi-calendar-check me-2"></i> Réservation
                             </button>
-                        </div>            
-            
+                        </div>
+                                   
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
