@@ -156,8 +156,7 @@ def IndexPage(request):
         }
         for marque, carross_dict in carburant_by_marque_and_carrosserie_and_transmission.items()
     }
-    
-
+        
     context = {
         "list_products": marque_filtered_products,
         "products_by_marque": products_by_marque,

@@ -61,6 +61,16 @@ class Produit(models.Model):
     immatriculation = models.CharField(max_length=255, unique=True)
     nom_entreprise = models.CharField(max_length=255)
     contact = models.CharField(max_length=255)
+    
+    moteur = models.PositiveIntegerField(validators=[MinValueValidator(0)])
+    place = models.PositiveIntegerField(validators=[MinValueValidator(0)])
+    couleur_interieur = models.CharField(max_length=255, default='No Color')
+    couleur_exterieur = models.CharField(max_length=255, default='No Color')
+    cylindre = models.PositiveIntegerField(validators=[MinValueValidator(0)])
+    puissance_fiscale = models.PositiveIntegerField(validators=[MinValueValidator(0)])  # Correction ici
+    nbre_proprio = models.PositiveIntegerField(validators=[MinValueValidator(0)])
+    condition = models.CharField(max_length=255)
+
     prix_location = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, validators=[MinValueValidator(0)])
     limite_assurance = models.DateField()
     date_ajout = models.DateTimeField(auto_now=True)

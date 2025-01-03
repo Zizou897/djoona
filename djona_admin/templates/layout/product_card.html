@@ -6,26 +6,17 @@
                 <div class="sidebar" style="position: sticky; top: 0; z-index: 10; background: #fff; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                     <h3>Filtres</h3>
             
-                    <!-- Filtres : Plage de prix -->
                     <div class="filter-section">
                         <h5>Plage de prix</h5>
                         <form method="get" action="">
                             <input type="number" name="min_price" class="form-control mb-2" placeholder="Prix min"
-                                   value="{{ min_price|default:'' }}">
+                                value="{{ min_price|default:'' }}">
                             <input type="number" name="max_price" class="form-control mb-2" placeholder="Prix max"
-                                   value="{{ max_price|default:'' }}">
+                                value="{{ max_price|default:'' }}">
                             <button type="submit" class="btn btn-primary btn-sm w-100">Appliquer</button>
                         </form>
-            
-                        <!-- Afficher un message d'erreur si présent -->
-                        {% if message %}
-                        <div class="alert alert-danger mt-3" role="alert">
-                            {{ message }}
-                        </div>
-                        {% endif %}
                     </div>
             
-                    <!-- Filtre : Type de voiture -->
                     <div class="filter-section">
                         <h5>Type de voiture</h5>
                         <form method="get" action="">
@@ -44,7 +35,6 @@
                         </form>
                     </div>
             
-                    <!-- Tri : Prix croissant, décroissant, ou plus récents -->
                     <div class="filter-section">
                         <h5>Trier par</h5>
                         <form method="get" action="">
@@ -72,11 +62,11 @@
 
             <div class="col-md-9">
                 {% if message %}
-                    <div class="alert alert-warning text-center fw-bold">
+                    <br/><br/>
+                    <div class="alert alert-warning text-center fw-bold col-md-12">
                         {{ message }}
                     </div>
                 {% endif %}
-
 
                 <div class="row">
 
