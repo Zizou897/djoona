@@ -156,6 +156,7 @@ def IndexPage(request):
         }
         for marque, carross_dict in carburant_by_marque_and_carrosserie_and_transmission.items()
     }
+    
 
     context = {
         "list_products": marque_filtered_products,
@@ -334,12 +335,24 @@ def ProductDetailPage(request, id):
     whatsapp_message = product.whatsapp_message()
     image_urls = [image.image.url for image in product.images.all()]
     images = product.images.all()
+    
+    statut = product.statut
+    
+    similar_products = Produit.objects.filter(
+        marque=product.marque,
+        transmission=product.transmission,
+        statut=statut
+    ).exclude(id=id) 
+    
+    similar_products = similar_products[:8]
 
     context = {
         "product": product,
         "whatsapp_message": whatsapp_message,
         "image_urls": image_urls,
-        "images": images
+        "images": images,
+        'similar_products': similar_products,
+        'statut': statut, 
     }
     return render(request, "product_detail.html", context)
 
