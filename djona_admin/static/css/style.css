@@ -142,7 +142,6 @@ body {
 }
 
 .vehicle-card {
-    /* border: thin solid #000000; */
     margin: 2px;
 }
 
@@ -790,12 +789,21 @@ body {
     }
 
     .vehicle-card-Mom {
-        width: 400px;
+        width: 400px !important;
+    }
+
+    .vehicle-card-Mom .price {
+        font-size: 20px !important;
     }
 
     .vehi_contact {
         padding-top:50px;
     }
+
+    #fixedBar, .resume {
+        display: none;
+    }
+
 }
 
 
@@ -814,4 +822,21 @@ body {
     display: inline-block;
 }
 
+
+.fixed-bars {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+@media (min-width: 768px) {
+    .fixed-bars {
+        display: none; /* Cacher sur les grands écrans */
+    }
+}
 

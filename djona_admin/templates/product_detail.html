@@ -214,7 +214,7 @@
 
 
 
-    <div class="section_infos" style="padding:70px;">
+    <div class="section_infos resume" style="padding:70px;">
 
         <div class="container">
 
@@ -675,14 +675,14 @@
                 <!-- Prix et Boutons d'Action -->
                 <div class="col-md-3 text-md-end">
                     <div class="row g-3 mt-2">
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-6 col-md-6 col-lg-6">
                             <a href="{% url 'contact' product.id %}" 
                                class="btn btn-outline-primary w-100 py-3 d-flex align-items-center justify-content-center 
                                {% if product.statut|lower == 'vendu' %}disabled{% endif %}">
                                 <i class="bi bi-envelope me-2"></i> Intéressé
                             </a>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-6 col-md-6 col-lg-6">
                             <a href="https://wa.me/22540018376?text={{ whatsapp_message|urlencode }}" 
                                target="_blank" 
                                class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center 
@@ -705,6 +705,38 @@
             </div>
         </div>
     </div>
+
+
+    <div id="fixedBars" class="fixed-bars d-none">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-6">
+                    <a href="{% url 'contact' product.id %}" 
+                       class="btn btn-outline-primary w-100 py-3 d-flex align-items-center justify-content-center 
+                       {% if product.statut|lower == 'vendu' %}disabled{% endif %}">
+                        <i class="bi bi-envelope me-2"></i> Intéressé
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a href="https://wa.me/22540018376?text={{ whatsapp_message|urlencode }}" 
+                       target="_blank" 
+                       class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center 
+                       {% if product.statut|lower == 'vendu' %}disabled{% endif %}">
+                        <i class="bi bi-whatsapp me-2"></i> WhatsApp
+                    </a>
+                </div>
+        
+                <div class="col-12" style="margin-top: 10px;">
+                    <button class="btn btn-outline-secondary w-100 w-md-auto 
+                    {% if product.statut|lower == 'vendu' or product.statut|lower == 'vente' %}disabled{% endif %}" 
+                    type="button" style="background: #154698; color: #fff; padding: 15px;" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        <i class="bi bi-calendar-check me-2"></i> Réservation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
 
 
@@ -763,6 +795,17 @@
             const mainImage = document.getElementById('mainImage');
             mainImage.src = imageUrl;
         }
+
+
+        document.addEventListener('scroll', function () {
+            const fixedBars = document.getElementById('fixedBars');
+            if (window.scrollY > 400) { 
+                fixedBars.classList.remove('d-none');
+            } else {
+                fixedBars.classList.add('d-none');
+            }
+        });
+        
     </script>    
 
     <style>
