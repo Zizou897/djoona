@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os 
-import environ
 
 
 
@@ -31,7 +30,7 @@ SECRET_KEY = 'django-insecure-^+8q1egh$eypf$y$8ex8!&4c0y^v=g$u5gx$qdmoylq5bwjp9k
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
