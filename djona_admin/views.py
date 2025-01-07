@@ -124,7 +124,8 @@ def IndexPage(request):
     def get_image_count_and_first_url(product):
         return product.image_count(), product.first_image_url()
     
-    type_counts = Counter(product.type.lower() for product in vente_products if product.type)
+    type_counts = Counter(product.
+type.lower() for product in vente_products if product.type)
     
     carrosserie_by_marque = defaultdict(set)
     transmission_by_marque_and_carrosserie = defaultdict(lambda: defaultdict(set))
